@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>他的默契測驗</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:linear-gradient(135deg,#ff9ecf,#ffffff);
+}
+
+.card{
+background:white;
+padding:25px;
+margin:25px auto;
+width:85%;
+border-radius:20px;
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+
+button{
+display:block;
+width:80%;
+margin:10px auto;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#ff6fae;
+color:white;
+font-size:16px;
+}
+
+#score{
+font-size:22px;
+margin-top:20px;
+}
+
+.heart{
+font-size:40px;
+animation:pop 0.6s infinite alternate;
+}
+
+@keyframes pop{
+from{transform:scale(1);}
+to{transform:scale(1.3);}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>💗 你有多了解他</h1>
+
+<div id="quiz"></div>
+
+<div id="score"></div>
+
+<script>
+
+const questions=[
+
+{
+q:"他最喜歡喝什麼？",
+options:["可樂","粉色魔爪","奶茶","紅牛"],
+answer:1
+},
+
+{
+q:"他希望長到幾公分？",
+options:["175","178","180","182"],
+answer:1
+},
+
+{
+q:"他生病時在哪裡？",
+options:["在家","住院","學校","出去玩"],
+answer:1
+},
+
+{
+q:"他冷的時候最常說？",
+options:["喝湯","抱抱","睡覺","穿外套"],
+answer:1
+},
+
+{
+q:"沒有晚安會怎樣？",
+options:["生氣","睡不著","哭","不理人"],
+answer:1
+}
+
+]
+
+let score=0
+
+function start(){
+
+let html=""
+
+questions.forEach((q,i)=>{
+
+html+=`
+<div class="card">
+<h3>${i+1}. ${q.q}</h3>
+`
+
+q.options.forEach((o,j)=>{
+
+html+=`<button onclick="answer(${i},${j})">${o}</button>`
+
+})
+
+html+=`<div id="r${i}"></div></div>`
+
+})
+
+document.getElementById("quiz").innerHTML=html
+
+}
+
+function answer(i,c){
+
+let q=questions[i]
+
+if(c==q.answer){
+
+score++
+
+document.getElementById("r"+i).innerHTML="❤️ 正確"
+
+}else{
+
+document.getElementById("r"+i).innerHTML="❌ 正確："+q.options[q.answer]
+
+}
+
+if(i==questions.length-1){
+
+showScore()
+
+}
+
+}
+
+function showScore(){
+
+let text=""
+
+if(score==5){
+
+text=`<div class="heart">❤️❤️❤️</div>滿分！你超了解他`
+
+}else if(score>=3){
+
+text=`默契 ${score}/5 還不錯`
+
+}else{
+
+text=`默契 ${score}/5 要更了解他喔`
+
+}
+
+document.getElementById("score").innerHTML=text
+
+}
+
+start()
+
+</script>
+
+</body>
+</html>
